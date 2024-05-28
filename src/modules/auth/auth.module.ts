@@ -13,7 +13,7 @@ import { LocalStrategy } from './local.strategy';
     PassportModule,
     JwtModule.register({
       secret: 'MY NAME IS LOKI IM WORKING IN KRION', 
-      signOptions: { expiresIn: '60m' },
+      signOptions: { expiresIn: '120m' },
     }),
   ],
   providers: [AuthService, JwtStrategy, LocalStrategy],

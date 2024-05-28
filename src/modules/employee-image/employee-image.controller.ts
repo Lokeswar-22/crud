@@ -1,14 +1,17 @@
-import { Controller, Get, Post, Body, Param, Put, Delete,UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Put, Delete,UseInterceptors, UploadedFile, UseGuards } from '@nestjs/common';
 import { EmployeeImageService } from './employee-image.service';
 import { CreateEmployeeImageDto } from './dto/create-employee-image.dto';
 import { UpdateEmployeeImageDto } from './dto/update-employee-image.dto';
 import { EmployeeImage } from './entities/employee-image.entity';
 import { diskStorage } from 'multer';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 
 
 @Controller('employee-images')
+@UseGuards(JwtAuthGuard)
+
 export class EmployeeImageController {
   constructor(private readonly employeeImageService: EmployeeImageService) {}
 
