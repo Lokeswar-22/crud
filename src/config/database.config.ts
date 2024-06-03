@@ -18,8 +18,6 @@ export class TypeormService implements TypeOrmOptionsFactory {
       options: {
         trustServerCertificate: true,
       },
-      
-      
       entities: [Employees, Department, Project, EmployeeImage, User],
     };
   }
