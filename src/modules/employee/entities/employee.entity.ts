@@ -2,6 +2,7 @@ import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, ManyToMany, OneToMan
 import { Department } from 'src/modules/department/entities/department.entity';
 import { Project } from 'src/modules/project/entities/project.entity';
 import { EmployeeImage } from 'src/modules/employee-image/entities/employee-image.entity';
+import { Timesheet } from 'src/modules/timesheet/entities/timesheet.entity';
 
 @Entity()
 export class Employees {
@@ -31,9 +32,10 @@ export class Employees {
 
   @ManyToOne(() => Department, department => department.employees, { nullable: true })
   department: Department;
-
   @ManyToMany(() => Project, project => project.employees)
-
   projects: Project[];
 
+  @OneToMany(() => Timesheet, timesheet => timesheet.employee)
+  timesheets: Timesheet[];
 }
+

@@ -5,6 +5,7 @@ import { Department } from 'src/modules/department/entities/department.entity';
 import { Project } from 'src/modules/project/entities/project.entity';
 import { EmployeeImage } from 'src/modules/employee-image/entities/employee-image.entity';
 import { User } from 'src/modules/users/user.entity';
+import { Timesheet } from 'src/modules/timesheet/entities/timesheet.entity';
 @Injectable()
 export class TypeormService implements TypeOrmOptionsFactory {
   createTypeOrmOptions(): TypeOrmModuleOptions {
@@ -18,7 +19,7 @@ export class TypeormService implements TypeOrmOptionsFactory {
       options: {
         trustServerCertificate: true,
       },
-      entities: [Employees, Department, Project, EmployeeImage, User],
+      entities: [Employees, Department, Project, EmployeeImage, User, Timesheet],
     };
   }
 }
