@@ -19,11 +19,11 @@ export class TimesheetService {
   ) {}
 
   async create(createTimesheetDto: CreateTimesheetDto): Promise<Timesheet> {
-    const { clockInTime, clockOutTime } = createTimesheetDto;
+    const { clockInTime, clockOutTime, employeeId, projectId } = createTimesheetDto;
     const hoursWorked = this.calculateWorkingHours(clockInTime, clockOutTime);
 
-    const employee = await this.employeeRepository.findOne({ where: { id: createTimesheetDto.employeeId } });
-    const project = await this.projectRepository.findOne({ where: { id: createTimesheetDto.projectId } });
+    const employee = await this.employeeRepository.findOne({ where: { id: employeeId } });
+    const project = await this.projectRepository.findOne({ where: { id: projectId } });
 
     if (!employee || !project) {
       throw new NotFoundException('Employee or Project not found');
@@ -57,11 +57,11 @@ export class TimesheetService {
   }
 
   async update(id: number, updateTimesheetDto: UpdateTimesheetDto): Promise<Timesheet> {
-    const { clockInTime, clockOutTime } = updateTimesheetDto;
+    const { clockInTime, clockOutTime, employeeId, projectId } = updateTimesheetDto;
     const hoursWorked = this.calculateWorkingHours(clockInTime, clockOutTime);
 
-    const employee = await this.employeeRepository.findOne({ where: { id: updateTimesheetDto.employeeId } });
-    const project = await this.projectRepository.findOne({ where: { id: updateTimesheetDto.projectId } });
+    const employee = await this.employeeRepository.findOne({ where: { id: employeeId } });
+    const project = await this.projectRepository.findOne({ where: { id: projectId } });
 
     if (!employee || !project) {
       throw new NotFoundException('Employee or Project not found');
