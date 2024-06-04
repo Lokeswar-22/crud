@@ -77,6 +77,17 @@ export class EmployeeService {
     }
     return employee.projects;
   }
+  /*
+  async findProjectsByEmployee(employeeId: number): Promise<Project[]> {
+  return await this.projectRepository.query(`
+    SELECT p.id, p.name 
+    FROM projects p 
+    INNER JOIN employee_project ep ON p.id = ep.projectId 
+    WHERE ep.employeeId = $1
+  `, [employeeId]);
+}
+
+  */
 
 
 

@@ -10,6 +10,8 @@ import { Employees } from '../employee/entities/employee.entity';
 @Injectable()
 export class DepartmentService {
   constructor(
+    @InjectRepository(Employees)
+    private employeeRepository: Repository<Employees>,
     @InjectRepository(Department)
     private departmentRepository: Repository<Department>,
   ) {}
@@ -42,12 +44,21 @@ export class DepartmentService {
 
 
   async findEmployeesByDepartment(departmentId: number): Promise<Employees[]> {
-    const department = await this.departmentRepository.findOne(
-      { where: { id: departmentId }, relations: ['employees'] }
-    );
-    if (!department) {
-      throw new NotFoundException(`Department with ID ${departmentId} not found`);
+    return await this.employeeRepository.createQueryBuilder('employee')
+      .innerJoin('employee.department', 'department')
+      .where('department.id = :departmentId', { departmentId })
+      .select(['employee.id', 'employee.name', 'employee.email'])
+      .getMany();
     }
-    return department.employees;
-  }
+
+    /*
+    async findEmployeesByDepartment(departmentId: number): Promise<Employees[]> {
+      return await this.employeeRepository.query(`
+        SELECT e.id, e.name, e.email 
+        FROM employees e 
+        INNER JOIN department d ON e.departmentId = d.id 
+        WHERE d.id = $1
+      `, [departmentId]);
+    }
+ */
 }
